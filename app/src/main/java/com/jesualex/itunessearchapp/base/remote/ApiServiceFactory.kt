@@ -13,9 +13,9 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 object ApiServiceFactory {
     @JvmOverloads fun <T> build(
-        client: OkHttpClient.Builder = OkHttpClient.Builder(),
         serviceClass: Class<T>,
-        urlBase: String
+        urlBase: String,
+        client: OkHttpClient.Builder = OkHttpClient.Builder()
     ): T {
         if (BuildConfig.DEBUG) {
             activateDebug(client)

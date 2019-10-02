@@ -15,17 +15,13 @@ abstract class UseCaseParam<T, U> {
     protected val subscribeOn: Scheduler get() = Schedulers.io()
     protected val observeOn: Scheduler get() = AndroidSchedulers.mainThread()
 
-    fun execute(param: U?, disposableObserver: UseCaseObserver<T>) {
+    fun execute(param: U, disposableObserver: UseCaseObserver<T>) {
         createObservableUseCase(param)?.let {
             val observable = it.subscribeOn(subscribeOn).observeOn(observeOn)
             val observer = observable.subscribeWith(disposableObserver)
 
             compositeDisposable.add(observer)
         }
-    }
-
-    fun execute(disposableObserver: UseCaseObserver<T>) {
-        execute(null, disposableObserver)
     }
 
     fun dispose() {
