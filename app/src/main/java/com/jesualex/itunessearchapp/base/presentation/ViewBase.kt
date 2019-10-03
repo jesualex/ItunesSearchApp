@@ -1,9 +1,8 @@
 package com.jesualex.itunessearchapp.base.presentation
 
 import android.content.Context
-import android.widget.Toast
 import androidx.annotation.StringRes
-import com.jesualex.itunessearchapp.base.App
+import com.jesualex.itunessearchapp.App
 
 /**
  * Created by jesualex on 18-02-19.

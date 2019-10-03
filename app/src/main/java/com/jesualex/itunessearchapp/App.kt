@@ -1,4 +1,4 @@
-package com.jesualex.itunessearchapp.base
+package com.jesualex.itunessearchapp
 
 import android.app.Application
 import android.content.Context

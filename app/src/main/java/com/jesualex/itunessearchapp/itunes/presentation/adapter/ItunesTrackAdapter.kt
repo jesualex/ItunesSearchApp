@@ -10,11 +10,14 @@ import com.jesualex.itunessearchapp.R
 import com.jesualex.itunessearchapp.base.presentation.adapter.ItemAdapterListener
 import com.jesualex.itunessearchapp.itunes.data.domain.entity.ItunesItem
 import kotlinx.android.synthetic.main.item_track.view.*
+import javax.inject.Inject
 
 /**
  * Created by jesualex on 2019-10-01.
  */
-class ItunesTrackAdapter: PagedListAdapter<ItunesItem, ItunesTrackAdapter.ViewHolder>(DIFF_CALLBACK) {
+class ItunesTrackAdapter @Inject constructor(
+
+) : PagedListAdapter<ItunesItem, ItunesTrackAdapter.ViewHolder>(DIFF_CALLBACK) {
     var clickListener: ItemAdapterListener<ItunesItem>? = null
 
     override fun getItemId(position: Int): Long {
@@ -32,10 +35,18 @@ class ItunesTrackAdapter: PagedListAdapter<ItunesItem, ItunesTrackAdapter.ViewHo
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun initView(item: ItunesItem?, pos: Int){
             if(item == null){
+                itemView.visibility = View.GONE
                 return
             }
 
             itemView.itunesItemName.text = item.trackName
+            itemView.itunesItemArtist.text = item.artistName
+
+            itemView.setOnClickListener {
+                clickListener?.onItem(item, pos)
+            }
+
+            itemView.visibility = View.VISIBLE
         }
     }
 

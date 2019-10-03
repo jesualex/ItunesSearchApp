@@ -5,6 +5,6 @@ package com.jesualex.itunessearchapp.itunes.data.domain.entity
  */
 class SearchByTermParams(
     val term: String,
-    val page: Int,
+    val limit: Int,
     val mediaType: String = "music"
 )
