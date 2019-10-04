@@ -26,10 +26,18 @@ class ItunesItemRepo @Inject constructor(
             )
     }
 
-    fun saveAll(items: List<ItunesItem>){
+    fun save(items: List<ItunesItem>){
         Realm.getDefaultInstance().use { realm ->
             realm.executeTransactionAsync {
                 it.copyToRealmOrUpdate(itunesItemLocalMapper.reverseMap(items))
+            }
+        }
+    }
+
+    fun save(item: ItunesItem){
+        Realm.getDefaultInstance().use { realm ->
+            realm.executeTransactionAsync {
+                it.copyToRealmOrUpdate(itunesItemLocalMapper.reverseMap(item))
             }
         }
     }

@@ -5,5 +5,5 @@ package com.jesualex.itunessearchapp.itunes.presentation.contract
  */
 
 interface ItunesTrackView{
-    fun onNotFound()
+    fun onSearch(notFound: Boolean)
 }

@@ -18,7 +18,7 @@ data class ItunesItem (
     val collectionViewUrl : String = "",
     val trackViewUrl : String = "",
     val previewUrl : String? = null,
-    val artworkUrl30 : String = "",
+    val artworkUrl30 : String? = null,
     val artworkUrl60 : String? = null,
     val artworkUrl100 : String? = null,
     val collectionPrice : Double = 0.0,
@@ -34,5 +34,8 @@ data class ItunesItem (
     val country : String = "",
     val currency : String = "",
     val primaryGenreName : String = "",
-    val isStreamable : Boolean?  = null
+    val isStreamable : Boolean?  = null,
+    var isPlaying: Boolean = false,
+    var playedPercent: Int = 0,
+    var playDuration: Int = 0
 )

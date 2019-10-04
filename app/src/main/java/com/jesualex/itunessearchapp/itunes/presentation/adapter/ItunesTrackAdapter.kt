@@ -1,5 +1,6 @@
 package com.jesualex.itunessearchapp.itunes.presentation.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jesualex.itunessearchapp.R
 import com.jesualex.itunessearchapp.base.presentation.adapter.ItemAdapterListener
 import com.jesualex.itunessearchapp.itunes.data.domain.entity.ItunesItem
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.item_playstop.view.*
 import kotlinx.android.synthetic.main.item_track.view.*
 import javax.inject.Inject
 
@@ -19,6 +22,7 @@ class ItunesTrackAdapter @Inject constructor(
 
 ) : PagedListAdapter<ItunesItem, ItunesTrackAdapter.ViewHolder>(DIFF_CALLBACK) {
     var clickListener: ItemAdapterListener<ItunesItem>? = null
+    var playListener: ItemAdapterListener<ItunesItem>? = null
 
     override fun getItemId(position: Int): Long {
         return getItem(position)!!.trackId.toLong()
@@ -42,8 +46,41 @@ class ItunesTrackAdapter @Inject constructor(
             itemView.itunesItemName.text = item.trackName
             itemView.itunesItemArtist.text = item.artistName
 
+            item.artworkUrl60?.let {
+                if(itemView.itunesItemThumb.tag == it){
+                    return@let
+                }
+
+                Picasso.get()
+                    .load(it)
+                    .into(itemView.itunesItemThumb)
+
+                itemView.itunesItemThumb.tag = it
+            }
+
+            if(item.isPlaying){
+                itemView.playStopButton.setImageResource(R.drawable.ic_stop)
+
+                if(item.playedPercent == 0){
+                    itemView.playStopProgress.isIndeterminate = true
+                }else{
+                    itemView.playStopProgress.isIndeterminate = false
+                    itemView.playStopProgress.max = item.playDuration
+                    itemView.playStopProgress.progress = item.playedPercent
+                }
+
+                itemView.playStopProgress.visibility = View.VISIBLE
+            }else{
+                itemView.playStopButton.setImageResource(R.drawable.ic_play_arrow)
+                itemView.playStopProgress.visibility = View.GONE
+            }
+
             itemView.setOnClickListener {
                 clickListener?.onItem(item, pos)
+            }
+
+            itemView.playStop.setOnClickListener {
+                playListener?.onItem(item, pos)
             }
 
             itemView.visibility = View.VISIBLE

@@ -18,7 +18,7 @@ data class ItunesItemRemote (
     val collectionViewUrl : String = "",
     val trackViewUrl : String = "",
     val previewUrl : String? = null,
-    val artworkUrl30 : String = "",
+    val artworkUrl30 : String? = null,
     val artworkUrl60 : String? = null,
     val artworkUrl100 : String? = null,
     val collectionPrice : Double = 0.0,

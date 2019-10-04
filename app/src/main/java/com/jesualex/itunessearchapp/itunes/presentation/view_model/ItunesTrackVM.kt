@@ -28,7 +28,12 @@ class ItunesTrackVM: ViewModel() {
 
     private lateinit var livePagedListBuilder: LivePagedListBuilder<Int, ItunesItem>
 
-    var view: ItunesTrackView? = null
+    private var view: ItunesTrackView? = null
+
+    fun setView(view: ItunesTrackView): ItunesTrackVM{
+        this.view = view
+        return this
+    }
 
     fun setTerm(term: String): LiveData<PagedList<ItunesItem>>{
         val realmDataSourceFactory = comp.getItunesItemRepo().getMonarchySource(monarchy, term)
@@ -62,12 +67,13 @@ class ItunesTrackVM: ViewModel() {
                     ), object: UseCaseObserver<List<ItunesItem>>(){
                         override fun onNext(value: List<ItunesItem>) {
                             super.onNext(value)
+                            view?.onSearch(value.isEmpty())
                             comp.getItunesSearchRepo().saveSearch(term, value)
                         }
 
                         override fun onError(e: Throwable) {
                             super.onError(e)
-                            view?.onNotFound()
+                            view?.onSearch(true)
                         }
                     }
                 )

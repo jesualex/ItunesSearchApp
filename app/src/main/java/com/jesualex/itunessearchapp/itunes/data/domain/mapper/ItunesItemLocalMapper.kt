@@ -44,7 +44,10 @@ import javax.inject.Singleton
             country = value.country,
             currency = value.currency,
             primaryGenreName = value.primaryGenreName,
-            isStreamable = value.isStreamable
+            isStreamable = value.isStreamable,
+            isPlaying = value.isPlaying,
+            playedPercent = value.playedPercent,
+            playDuration = value.playDuration
         )
     }
 
@@ -80,7 +83,10 @@ import javax.inject.Singleton
             country = value.country,
             currency = value.currency,
             primaryGenreName = value.primaryGenreName,
-            isStreamable = value.isStreamable
+            isStreamable = value.isStreamable,
+            isPlaying = value.isPlaying,
+            playedPercent = value.playedPercent,
+            playDuration = value.playDuration
         )
     }
 }

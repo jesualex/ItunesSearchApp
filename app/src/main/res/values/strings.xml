@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Itunes Search</string>
+    <string name="notFoundText">No se encontro ningun resultado</string>
 </resources>

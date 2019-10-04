@@ -23,7 +23,7 @@ open class ItunesItemLocal (
     var collectionViewUrl : String = "",
     var trackViewUrl : String = "",
     var previewUrl : String? = null,
-    var artworkUrl30 : String = "",
+    var artworkUrl30 : String? = null,
     var artworkUrl60 : String? = null,
     var artworkUrl100 : String? = null,
     var collectionPrice : Double = 0.0,
@@ -40,6 +40,9 @@ open class ItunesItemLocal (
     var currency : String = "",
     var primaryGenreName : String = "",
     var isStreamable : Boolean?  = null,
+    var isPlaying: Boolean = false,
+    var playedPercent: Int = 0,
+    var playDuration: Int = 0,
 
     @LinkingObjects(ItunesSearchLocal.Keys.items)
     val searches: RealmResults<ItunesSearchLocal>? = null
