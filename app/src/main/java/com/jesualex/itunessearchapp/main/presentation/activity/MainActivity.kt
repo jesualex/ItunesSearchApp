@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.paging.PagedList
 import com.jesualex.itunessearchapp.R
 import com.jesualex.itunessearchapp.itunes.data.domain.entity.ItunesItem
+import com.jesualex.itunessearchapp.itunes.presentation.activity.AlbumDetailActivity
 import com.jesualex.itunessearchapp.itunes.presentation.contract.ItunesTrackView
 import com.jesualex.itunessearchapp.itunes.presentation.view_model.ItunesTrackVM
 import com.jesualex.itunessearchapp.main.presentation.contract.MainContract
@@ -62,6 +63,10 @@ class MainActivity : AppCompatActivity(), MainContract.MainView, ItunesTrackView
         mainNotFoundTV.visibility = if(notFound) View.VISIBLE else View.GONE
         mainTracksRv.visibility = if(!notFound) View.VISIBLE else View.GONE
         presenter.stopTrack()
+    }
+
+    override fun goToAlbumDetail(id: Long) {
+        startActivity(AlbumDetailActivity.newInstance(this, id))
     }
 
     @Singleton @Component interface Comp{

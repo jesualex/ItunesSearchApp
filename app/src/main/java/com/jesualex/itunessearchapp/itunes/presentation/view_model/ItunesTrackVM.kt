@@ -1,6 +1,7 @@
 package com.jesualex.itunessearchapp.itunes.presentation.view_model
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
@@ -34,6 +35,10 @@ class ItunesTrackVM: ViewModel() {
         this.view = view
         return this
     }
+
+    fun getAlbumTracksLiveData(albumId: Long): LiveData<List<ItunesItem>> = Transformations.map(
+        comp.getItunesItemRepo().getAlbumLiveData(albumId)
+    ) { input -> comp.getItunesItemLocalMapper().map(input) }
 
     fun setTerm(term: String): LiveData<PagedList<ItunesItem>>{
         val realmDataSourceFactory = comp.getItunesItemRepo().getMonarchySource(monarchy, term)

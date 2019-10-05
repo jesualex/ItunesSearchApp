@@ -15,4 +15,9 @@ interface ItunesSearchApi {
         @Query("limit") limit: Int,
         @Query("mediaType") mediaType: String?
     ): Observable<ItunesBaseRespRemote>
+
+    @GET("lookup") fun lookup(
+        @Query("id") id: Long,
+        @Query("entity") entity: String?
+    ): Observable<ItunesBaseRespRemote>
 }

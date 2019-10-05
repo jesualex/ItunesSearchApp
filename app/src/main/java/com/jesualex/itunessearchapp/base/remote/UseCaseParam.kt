@@ -30,5 +30,5 @@ abstract class UseCaseParam<T, U> {
         }
     }
 
-    protected abstract fun createObservableUseCase(param: U?): Observable<T>?
+    protected abstract fun createObservableUseCase(param: U): Observable<T>?
 }

@@ -12,8 +12,8 @@ open class ItunesItemLocal (
     var wrapperType : String = "",
     var kind : String = "",
     var artistId : Int = -1,
-    var collectionId : Int = -1,
-    @PrimaryKey var trackId : Int = -1,
+    var collectionId : Long = -1,
+    @PrimaryKey var trackId : Long = -1,
     var artistName : String = "",
     var collectionName : String = "",
     var trackName : String = "",
@@ -53,5 +53,7 @@ open class ItunesItemLocal (
 
     object Keys{
         const val searches = "searches"
+        const val collectionId = "collectionId"
+        const val wrapperType = "wrapperType"
     }
 }

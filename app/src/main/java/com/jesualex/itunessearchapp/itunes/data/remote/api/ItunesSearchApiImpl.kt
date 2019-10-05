@@ -25,5 +25,9 @@ import javax.inject.Singleton
     ): Observable<ItunesBaseRespRemote> {
         return api.search(term, limit, mediaType)
     }
+
+    override fun lookup(id: Long, entity: String?): Observable<ItunesBaseRespRemote> {
+        return api.lookup(id, entity)
+    }
 }
  

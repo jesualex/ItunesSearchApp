@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Itunes Search</string>
     <string name="notFoundText">No se encontro ningun resultado</string>
+    <string name="ErrorLoadingTracks">error cargando canciones intente nuevamente.</string>
 </resources>

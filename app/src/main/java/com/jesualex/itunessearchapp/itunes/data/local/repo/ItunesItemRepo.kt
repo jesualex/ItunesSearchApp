@@ -1,5 +1,6 @@
 package com.jesualex.itunessearchapp.itunes.data.local.repo
 
+import com.jesualex.itunessearchapp.base.presentation.LiveDataRepository
 import com.jesualex.itunessearchapp.itunes.data.domain.entity.ItunesItem
 import com.jesualex.itunessearchapp.itunes.data.domain.mapper.ItunesItemLocalMapper
 import com.jesualex.itunessearchapp.itunes.data.local.entity.ItunesItemLocal
@@ -7,6 +8,7 @@ import com.jesualex.itunessearchapp.itunes.data.local.entity.ItunesSearchLocal
 import com.zhuinden.monarchy.Monarchy
 import io.realm.Realm
 import io.realm.RealmQuery
+import io.realm.Sort
 import javax.inject.Inject
 
 /**
@@ -51,4 +53,12 @@ class ItunesItemRepo @Inject constructor(
     fun countByTerm(term: String): Long{
         return  getTermQuery(Realm.getDefaultInstance(), term).count()
     }
+
+    fun getAlbumLiveData(albumId: Long) = LiveDataRepository(
+        Realm.getDefaultInstance()
+                .where(realmClass)
+                .equalTo(ItunesItemLocal.Keys.collectionId, albumId)
+                .equalTo(ItunesItemLocal.Keys.wrapperType, "track")
+                .findAllAsync()
+    )
 }

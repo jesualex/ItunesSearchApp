@@ -13,13 +13,13 @@ import javax.inject.Inject
  * Created by jesualex on 2019-10-02.
  */
 
-class SearchByTermUseCase @Inject constructor(
+class SearchByIdUseCase @Inject constructor(
     private val itunesSearchApi: ItunesSearchApiImpl,
     private val itunesItemMapper: ItunesItemRemoteMapper
-): UseCaseParam<List<ItunesItem>, SearchByTermParams>() {
+): UseCaseParam<List<ItunesItem>, Long>() {
 
-    override fun createObservableUseCase(param: SearchByTermParams): Observable<List<ItunesItem>>? {
-        return itunesSearchApi.search(param.term, param.limit, param.mediaType).map {
+    override fun createObservableUseCase(param: Long): Observable<List<ItunesItem>>? {
+        return itunesSearchApi.lookup(param, "song").map {
                 resp -> itunesItemMapper.map(resp.results)
         }
     }

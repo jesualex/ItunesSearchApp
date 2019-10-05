@@ -26,7 +26,8 @@
         tools:listitem="@layout/item_track"
         android:clipToPadding="false"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/mainSearchView"/>
+        app:layout_constraintTop_toBottomOf="@id/mainSearchView"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <TextView
         android:id="@+id/mainNotFoundTV"

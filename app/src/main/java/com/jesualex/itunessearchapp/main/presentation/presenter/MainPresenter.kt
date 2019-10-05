@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import com.jesualex.itunessearchapp.base.presentation.adapter.ItemAdapterListener
 import com.jesualex.itunessearchapp.itunes.data.domain.entity.ItunesItem
-import com.jesualex.itunessearchapp.itunes.presentation.adapter.ItunesTrackAdapter
+import com.jesualex.itunessearchapp.itunes.presentation.adapter.ItunesTrackPagedAdapter
 import com.jesualex.itunessearchapp.itunes.presentation.presenter.ItunesPlayer
 import com.jesualex.itunessearchapp.main.presentation.contract.MainContract
 import javax.inject.Inject
@@ -16,11 +16,11 @@ import javax.inject.Singleton
  * Created by jesualex on 2019-10-01.
  */
 @Singleton class MainPresenter @Inject constructor(
-    private val trackAdapter: ItunesTrackAdapter,
+    private val trackPagedAdapter: ItunesTrackPagedAdapter,
     private val itunesPlayer: ItunesPlayer
 ): MainContract.MainPresenter {
-    private val trackObserver = Observer<PagedList<ItunesItem>> { trackAdapter.submitList(it) }
-    private var itemPlaying: Int? = null
+    private val trackObserver = Observer<PagedList<ItunesItem>> { trackPagedAdapter.submitList(it) }
+    private var itemPlaying: Long? = null
 
     private lateinit var view: MainContract.MainView
 
@@ -31,7 +31,7 @@ import javax.inject.Singleton
     }
 
     override fun initAdapterListener() {
-        trackAdapter.playListener = ItemAdapterListener { item, pos ->
+        trackPagedAdapter.playListener = ItemAdapterListener { item, pos ->
             if(itemPlaying == item.trackId){
                 itunesPlayer.stopTrack()
                 itemPlaying = null
@@ -40,10 +40,15 @@ import javax.inject.Singleton
                 itunesPlayer.playTrack(item)
             }
         }
+
+        trackPagedAdapter.clickListener = ItemAdapterListener { item, pos ->
+            itunesPlayer.stopTrack()
+            view.goToAlbumDetail(item.collectionId)
+        }
     }
 
-    override fun getAdapter(): ItunesTrackAdapter {
-        return trackAdapter
+    override fun getAdapter(): ItunesTrackPagedAdapter {
+        return trackPagedAdapter
     }
 
     override fun getSearchBarListener(): SearchView.OnQueryTextListener {
@@ -51,7 +56,7 @@ import javax.inject.Singleton
             override fun onQueryTextSubmit(p0: String?): Boolean {
                 p0?.let {
                     if(it.isEmpty()){
-                        trackAdapter.submitList(null)
+                        trackPagedAdapter.submitList(null)
                         return true
                     }
 
@@ -59,7 +64,7 @@ import javax.inject.Singleton
 
                     trackLiveData = view.getVMAndObserve(it, trackObserver)
                 }?:run{
-                    trackAdapter.submitList(null)
+                    trackPagedAdapter.submitList(null)
                 }
 
                 return true

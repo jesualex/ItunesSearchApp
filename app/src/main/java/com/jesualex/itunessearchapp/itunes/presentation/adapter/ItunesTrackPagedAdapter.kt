@@ -17,23 +17,14 @@ import javax.inject.Inject
 /**
  * Created by jesualex on 2019-10-01.
  */
-class ItunesTrackAdapter @Inject constructor(
+class ItunesTrackPagedAdapter @Inject constructor(
 
-) : RecyclerView.Adapter<ItunesTrackAdapter.ViewHolder>() {
+) : PagedListAdapter<ItunesItem, ItunesTrackPagedAdapter.ViewHolder>(DIFF_CALLBACK) {
     var clickListener: ItemAdapterListener<ItunesItem>? = null
     var playListener: ItemAdapterListener<ItunesItem>? = null
-    var items: List<ItunesItem> = listOf()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
 
     override fun getItemId(position: Int): Long {
-        return items[position].trackId.toLong()
-    }
-
-    override fun getItemCount(): Int {
-        return items.size
+        return getItem(position)!!.trackId.toLong()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -41,7 +32,7 @@ class ItunesTrackAdapter @Inject constructor(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.initView(items[position], position)
+        holder.initView(getItem(position), position)
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -92,6 +83,15 @@ class ItunesTrackAdapter @Inject constructor(
             }
 
             itemView.visibility = View.VISIBLE
+        }
+    }
+
+    companion object {
+        private val DIFF_CALLBACK = object :
+            DiffUtil.ItemCallback<ItunesItem>() {
+            override fun areItemsTheSame(oldItem: ItunesItem, newItem: ItunesItem) = oldItem.trackId == newItem.trackId
+
+            override fun areContentsTheSame(oldItem: ItunesItem, newItem: ItunesItem) = oldItem == newItem
         }
     }
 }
